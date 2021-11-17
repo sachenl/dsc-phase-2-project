@@ -29,38 +29,39 @@ It is up to you to decide what data from this dataset to use and how to use it. 
 
 ### Business Problem
 
-It is up to you to define a stakeholder and business problem appropriate to this dataset.
+We have had the house selling records for the last few years. With these data, I want to build a model in which I can use the features in the data about the house to predict the price. In this case, we can guide both the seller and buyer to their business. The seller can use the model to predict the selling price of their house and if they need to do any renovation before selling their home. The buyer can have some suggestions about which kind of house they can afford based on their budget. To the details goal：
 
-If you are struggling to define a stakeholder, we recommend you complete a project for a real estate agency that helps homeowners buy and/or sell homes. A business problem you could focus on for this stakeholder is the need to provide advice to homeowners about how home renovations might increase the estimated value of their homes, and by what amount.
+1. polish the data which have no meaning or is null to the price.
+2. remove the features which do not contribute to the house price.
+3. check if there are some high correlated features in which some of them can be removed.
+4. build the linear regression model.
+5. check how the features can contribute to the house change.
 
-## Deliverables
+## Loading the Data
+In the cell below, I load the house data into a dataframe and checked it's dimension and datatype.
 
-There are three deliverables for this project:
+df = pd.read_csv("data/kc_house_data.csv")
+df.head()
 
-* A **GitHub repository**
-* A **Jupyter Notebook**
-* A **non-technical presentation**
+I need to steply remove and polish most of the columns which is not contribute to the price of house
+1. The id is not related to the price
+2. Split the date file to month and year.
+3. Since the lat and long data is high related to the zipcode, I need to remove them.
+4. Remodle the zip column with only the first three number
+5. Remove the sqft_living15 and sqft_lot15 from columns.
+6. Change the yr_built to the age of house at sold time
+7. Change the yr_renovated to if the house is renovated and is the renovated within 10 and 30 years at sold.
 
-Review the "Project Submission & Review" page in the "Milestones Instructions" topic for instructions on creating and submitting your deliverables. Refer to the rubric associated with this assignment for specifications describing high-quality deliverables.
-
-### Key Points
-
-* **Your deliverables should explicitly address each step of the data science process.** Refer to [the Data Science Process lesson](https://github.com/learn-co-curriculum/dsc-data-science-processes) from Topic 19 for more information about process models you can use.
-
-* **Your Jupyter Notebook should demonstrate an iterative approach to modeling.** This means that you begin with a basic model, evaluate it, and then provide justification for and proceed to a new model. After you finish refining your models, you should provide 1-3 paragraphs discussing your final model - this should include interpreting at least 3 important parameter estimates or statistics.
-
-* **Based on the results of your models, your notebook and presentation should discuss at least two features that have strong relationships with housing prices.**
-
-## Getting Started
-
-Start on this project by forking and cloning [this project repository](https://github.com/learn-co-curriculum/dsc-phase-2-project) to get a local copy of the dataset.
-
-We recommend structuring your project repository similar to the structure in [the Phase 1 Project Template](https://github.com/learn-co-curriculum/dsc-project-template). You can do this either by creating a new fork of that repository to work in or by building a new repository from scratch that mimics that structure.
-
-## Project Submission and Review
-
-Review the "Project Submission & Review" page in the "Milestones Instructions" topic to learn how to submit your project and how it will be reviewed. Your project must pass review for you to progress to the next Phase.
-
+## remove the outlier data 
+ I then drawed the distribution of each of the columns which had more than 10 unique value to check if there is any outlier values. There are multipal columns contain some outlier data. I then collected all the columns and remove them 
+ 
+ ![fig2](https://raw.githubusercontent.com/sachenl/dsc-phase-2-project/main/pictures/fig2.png)
+ 
+ After remove the unnecessary data, in order to check the relationship between the price with most of the columns with few unique numbers, I plot their relations in seperate figures.
+ 
+ ![fig3](https://raw.githubusercontent.com/sachenl/dsc-phase-2-project/main/pictures/fig3.png)
+ 
+ 
 ## Summary
 
 This project will give you a valuable opportunity to develop your data science skills using real-world data. The end-of-phase projects are a critical part of the program because they give you a chance to bring together all the skills you've learned, apply them to realistic projects for a business stakeholder, practice communication skills, and get feedback to help you improve. You've got this!
